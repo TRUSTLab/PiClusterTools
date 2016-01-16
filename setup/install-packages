@@ -4,7 +4,7 @@
 # xinetd required for Prof Rozier's scripts
 
 apt-get update && sudo apt-get -y upgrade
-apt-get -y install nmap isc-dhcp-server pssh xinetd
+apt-get -y install nmap isc-dhcp-server pssh xinetd expect
 reboot
 
 # eof

@@ -1,0 +1,11 @@
+service $NAME$
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = $IP$ 22
+	port = $PORT$
+	user = nobody
+}

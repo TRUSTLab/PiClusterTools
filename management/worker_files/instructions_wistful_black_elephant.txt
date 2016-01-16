@@ -1,0 +1,11 @@
+####################################
+# CS 2011 Group Login Instructions #
+####################################
+
+Your group has been assigned the machine wistful_black_elephant
+
+To access wistful_black_elephant you must execute the following command:
+	ssh -p 20875 urania.eecs.uc.edu -l USERNAME
+
+Please include both the machine name, and port number 20875
+in any e-mails for support requests.
