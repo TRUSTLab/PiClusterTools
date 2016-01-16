@@ -9,6 +9,15 @@ Since the original cluster I've since begun building a set of scripts, images, a
 
 Thanks to Dwight Divine of the Illinois Natural History Survey, and Miguel Gavidia of the University of Miami College of Law for their help and input during this process.
 
+## Update Jan 16, 2016
+
+Scripts are in place to automatically scan the network, sort out the switch and head node, name the pis, and build xinetd services as well as
+instructions for the students on how to login, you can run this as 'management/map-workers.py', similarly 'management/demap-workers.py' tears
+all the services down and kills the instructions and config files.
+
+### Todos
+* Automated account creation, setup, and node assignment
+
 ## Update Jan 15, 2016
 
 I'm working to get a full, standalone, build that is easy to deploy.  This is still very much a work in progress in early alpha.
