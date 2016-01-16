@@ -7,6 +7,8 @@ The original idea for this project started in 2012 after reading about [a projec
 
 Since the original cluster I've since begun building a set of scripts, images, and plans, to make it easier for others to replicate this work, incorporating the [hard work](https://darrenjw2.wordpress.com/2015/09/07/raspberry-pi-2-cluster-with-nat-routing/) of Professor Darren Wilinison of Newcastle University, along with my own modifications.
 
+Thanks to Dwight Divine of the Illinois Natural History Survey, and Miguel Gavidia of the University of Miami College of Law for their help and input during this process.
+
 ## Update Jan 15, 2016
 
 I'm working to get a full, standalone, build that is easy to deploy.  This is still very much a work in progress in early alpha.

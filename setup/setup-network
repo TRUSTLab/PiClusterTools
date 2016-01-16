@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# basic interfaces
+cp interfaces /etc/network/
+/etc/init.d/networking restart
+
+# DHCP server
+cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.old
+cp dhcpd.conf /etc/dhcp/
+echo 'INTERFACES="eth0"' >> /etc/default/isc-dhcp-server
+/etc/init.d/isc-dhcp-server restart
+
+# NAT routing
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+# TODO: add more rules here for extra security...
+
+ifdown eth1 && ifup eth1
+iptables-save > /etc/iptables.up.rules
+
+cp iptables /etc/network/if-pre-up.d/
+chown root:root /etc/network/if-pre-up.d/iptables
+chmod 755 /etc/network/if-pre-up.d/iptables
+
+reboot
+
+# eof
+
