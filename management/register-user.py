@@ -4,20 +4,10 @@ import os.path
 import subprocess
 import sys
 from random import randint
+import xkcdPasswd
 
-states = ["florida", "ohio", "illinois", "indiana", "michigan", "missouri", "virginia", "kentucky", "california", "texas"]
-cities = ["miami", "cincinnati", "chicago", "cleveland", "columbus", "springfield", "detroit", "richmond", "urbana", "champaign"]
-presidents = ["lincoln", "washington", "jefferson", "taft", "madison", "coolidge", "roosevelt", "truman", "monroe", "adams"]
-nuts = ["peanut", "walnut", "almond", "macademia", "filbert", "brazil", "pistachio", "pine", "pumpkin", "sunflower"]
-items = ["stapler", "pencil", "pen", "notebook", "glass", "cabinet", "fork", "spoon", "knife", "mug"]
 
-v = randint(0, 9)
-w = randint(0, 9)
-x = randint(0, 9)
-y = randint(0, 9)
-z = randint(0, 9)
-
-password = states[v] + cities[w] + presidents[x] + nuts[y] + items[z]
+password = xkcdPasswd.genPasswd(4)
 
 username = sys.argv[1]
 
