@@ -75,6 +75,7 @@ fout.write("Your temporary password is:\t" + password + "\n")
 fout.write("\nYou must change this password when you first log in. Be sure to share the new\n")
 fout.write("password with your fellow group mates, as it will be changed for everyone when the\n")
 fout.write("first person logs in.\n")
+fout.write("\nOnce you have changed your password, you will have to log back in with your new password.\n")
 
 fout.close()
 

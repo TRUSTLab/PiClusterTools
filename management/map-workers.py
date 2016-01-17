@@ -38,7 +38,7 @@ for line in inf:
     color = random.randint(0,9)
     animal = random.randint(0,9)
     mood = random.randint(0,9)
-    myname = moods[mood] + "_" + colors[color] + "_" + animals[animal]
+    myname = moods[mood] + "-" + colors[color] + "-" + animals[animal]
     myport = "20" + str(mood) + str(color) + str(animal)
     rline = mymac + " " + myname + " " + myip + " " + myport
     froster.write(rline + "\n")
