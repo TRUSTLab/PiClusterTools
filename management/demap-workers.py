@@ -6,7 +6,7 @@ import random
 
 colors = ["orange", "blue", "green", "gold", "silver", "purple", "red", "black", "brown", "white"]
 animals = ["lion", "tiger", "bear", "eagle", "fox", "elephant", "moose", "gator", "fish", "whale"]
-moods = ["happy", "grumpy", "sleepy", "bashful", "sneezy", "dopey", "smart", "lazy", "wistful", "caffinated"]
+moods = ["happy", "grumpy", "sleepy", "bashful", "sneezy", "dopey", "smart", "lazy", "wistful", "caffeinated"]
 
 inf = open('pi-data.txt', 'r')
 
@@ -21,7 +21,7 @@ for line in inf:
     color = random.randint(0,9)
     animal = random.randint(0,9)
     mood = random.randint(0,9)
-    myname = moods[mood] + "_" + colors[color] + "_" + animals[animal]
+    myname = moods[mood] + "-" + colors[color] + "-" + animals[animal]
     myport = "20" + str(mood) + str(color) + str(animal)
     rline = mymac + " " + myname + " " + myip + " " + myport
     servicename = "pi_" + myname
@@ -32,7 +32,7 @@ for line in inf:
     subprocess.check_output(cmd, shell=True)
     cmd = "sudo rm -f /etc/xinetd.d/" + servicename
     subprocess.check_output(cmd, shell=True)
-    cmd = "sudo rm -f worker/files/instructions_" + myname + ".txt"
+    cmd = "sudo rm -f worker_files/instructions*"
     subprocess.check_output(cmd, shell=True)
 
 

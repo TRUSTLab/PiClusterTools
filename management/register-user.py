@@ -51,17 +51,17 @@ tenantCount[machine] = tenantCount[tokens[1]] + 1
 print "Creating new account on " + machine + " " + ipaddress[machine]
 
 cmd = "parallel-ssh -H " + ipaddress[machine] + " -t 0 -p 100 -P sudo mkdir /home/" + username
-print cmd
+subprocess.check_output(cmd, shell=True)
 cmd = "parallel-ssh -H " + ipaddress[machine] + " -t 0 -p 100 -P sudo useradd -d /home/" + username + " " + username
-print cmd
+subprocess.check_output(cmd, shell=True)
 cmd = "parallel-ssh -H " + ipaddress[machine] + " -t 0 -p 100 -P \"echo -e \\\"" + username + ":" + password + "\\\" | sudo chpasswd\""
-print cmd
+subprocess.check_output(cmd, shell=True)
 cmd = "parallel-ssh -H " + ipaddress[machine] + " -t 0 -p 100 -P sudo chage -d 0 " + username
-print cmd
-cmd = "parallel-scp -H " + ipaddress[machine] + " -l pi base_dir/bash_profile /home/ ~/bash_profile"
-print cmd
+subprocess.check_output(cmd, shell=True)
+cmd = "parallel-scp -H " + ipaddress[machine] + " -l pi base_dir/bash_profile ~/bash_profile"
+subprocess.check_output(cmd, shell=True)
 cmd = "parallel-ssh -H " + ipaddress[machine] + " -t 0 -p 100 -P sudo cp bash_profile ~" + username + "/.bash_profile"
-print cmd
+subprocess.check_output(cmd, shell=True)
 
 fout = open("user_files/instructions_" + username + ".txt", "w")
 finst = open("worker_files/instructions_" + machine + ".txt", "r")

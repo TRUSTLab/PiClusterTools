@@ -9,6 +9,10 @@ Since the original cluster I've since begun building a set of scripts, images, a
 
 Thanks to Dwight Divine of the Illinois Natural History Survey, and Miguel Gavidia of the University of Miami College of Law for their help and input during this process.
 
+## Update Jan 16, 2016, 8:03pm
+
+Added automated user deployment through 'register-user.py'
+
 ## Update Jan 16, 2016
 
 Scripts are in place to automatically scan the network, sort out the switch and head node, name the pis, and build xinetd services as well as
