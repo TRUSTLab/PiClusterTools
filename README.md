@@ -9,6 +9,12 @@ Since the original cluster I've since begun building a set of scripts, images, a
 
 Thanks to Dwight Divine of the Illinois Natural History Survey, and Miguel Gavidia of the University of Miami College of Law for their help and input during this process.
 
+## Update Jan 17, 2016
+
+I've implemented [XKCD style passwords](http://xkcd.com/936/) for new users using a word file of 235,886 words.
+For compatibility reasons, I've included this word file, as I'm finding not all systems (including Pis) have a good
+source of English words.
+
 ## Update Jan 16, 2016, 8:03pm
 
 Added automated user deployment through 'register-user.py'
