@@ -4,7 +4,7 @@ import subprocess
 import re
 import random
 
-colors = ["orange", "blue", "green", "gold", "silver", "purple", "red", "black", "brown", "white"]
+colors = ["orange", "blue", "green", "gold", "silver", "purple", "red", "gray", "magenta", "cyan"]
 animals = ["lion", "tiger", "bear", "eagle", "fox", "elephant", "moose", "gator", "fish", "whale"]
 moods = ["happy", "grumpy", "sleepy", "bashful", "sneezy", "dopey", "smart", "lazy", "wistful", "caffeinated"]
 
@@ -76,6 +76,7 @@ for line in inf:
     subprocess.check_output("parallel-scp -H " + myip + " worker_files/hostname." + myname + " ~/", shell=True)
     subprocess.check_output("parallel-scp -H " + myip + " worker_files/hosts." + myname + " ~/", shell=True)
     subprocess.check_output("parallel-ssh -i -H " + myip + " sudo cp hostname." + myname + " /etc/hostname", shell=True)
+    subprocess.check_output("parallel-ssh -i -H " + myip + " sudo cp hosts." + myname + " /etc/hosts", shell=True)
     subprocess.check_output("parallel-ssh -i -H " + myip + " sudo /etc/init.d/hostname.sh", shell=True)
     
     fout = open ("worker_files/instructions_" + myname + ".txt", "w")
