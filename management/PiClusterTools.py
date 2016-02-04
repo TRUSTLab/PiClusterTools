@@ -15,6 +15,19 @@ def registerMac(macAddr, myip):
         cur = db.cursor()
         cur.execute("INSERT INTO pis VALUES(?, ?, ?, ?)", myrow)
 
+def isUserRegistered(username):
+    db = lite.connect('pi-users.db')
+
+    with db:
+        db.row_factory = lite.Row
+        cur = db.cursor()
+        cur.execute("SELECT * FROM users WHERE UserName=:username", {"username": username})
+        db.commit()
+
+        data = cur.fetchall()
+
+    return(len(data) > 0)
+
 def isMacRegistered(macAddr):
     db = lite.connect('pi-workers.db')
 
