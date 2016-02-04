@@ -63,6 +63,25 @@ def registerUser(name, macaddr, users, username):
         cur.execute('UPDATE pis SET Users=? WHERE Name=?', (users, name))
         cur.execute('INSERT INTO users VALUES(?, ?, ?)', (username, macaddr, name))
 
+
+def deregisterUser(username):
+
+    db = lite.connect('pi-users.db')
+
+    with db:
+        db.row_factory = lite.Row
+        cur = db.cursor()
+        cur.execute('SELECT Name FROM users WHERE UserName=?', (username,))
+        db.commit()
+
+        server = cur.fetchall()[0]["Name"]
+
+        cur.execute('SELECT * FROM pis WHERE Name=?', (server,))
+        db.commit()
+        piInfo = cur.fetchall()[0]
+
+    return(piInfo)
+
 def createAccount(username, machine, ipaddress, password):
     print "Creating new account on " + machine + " " + ipaddress
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo mkdir /home/" + username
@@ -78,7 +97,12 @@ def createAccount(username, machine, ipaddress, password):
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo cp bash_profile ~" + username + "/.bash_profile"
     subprocess.check_output(cmd, shell=True)
 
-        
+def deleteAccount(username, machine, ipaddress, password):
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo userdel " + username
+    subprocess.check_output(cmd, shell=True)
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo rm -rf /home/" + username
+    subprocess.check_output(cmd, shell=True)
+    
 def findMinMachine():
     db = lite.connect('pi-users.db')
 
