@@ -1,0 +1,11 @@
+service pi_happy-orange-fox
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.35 22
+	port = 20004
+	user = nobody
+}

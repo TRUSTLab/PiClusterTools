@@ -1,0 +1,11 @@
+service pi_sneezy-magenta-whale
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.20 22
+	port = 20489
+	user = nobody
+}

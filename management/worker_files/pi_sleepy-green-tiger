@@ -1,0 +1,11 @@
+service pi_sleepy-green-tiger
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.21 22
+	port = 20221
+	user = nobody
+}

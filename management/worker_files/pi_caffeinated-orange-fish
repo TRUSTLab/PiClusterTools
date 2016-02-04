@@ -1,0 +1,11 @@
+service pi_caffeinated-orange-fish
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.17 22
+	port = 20908
+	user = nobody
+}

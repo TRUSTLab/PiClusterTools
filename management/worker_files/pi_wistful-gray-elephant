@@ -1,0 +1,11 @@
+service pi_wistful-gray-elephant
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.18 22
+	port = 20875
+	user = nobody
+}

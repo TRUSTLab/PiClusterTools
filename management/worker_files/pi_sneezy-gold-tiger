@@ -1,0 +1,11 @@
+service pi_sneezy-gold-tiger
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.22 22
+	port = 20431
+	user = nobody
+}

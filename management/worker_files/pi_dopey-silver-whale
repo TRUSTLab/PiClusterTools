@@ -1,0 +1,11 @@
+service pi_dopey-silver-whale
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.36 22
+	port = 20549
+	user = nobody
+}

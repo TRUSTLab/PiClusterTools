@@ -1,0 +1,11 @@
+service pi_sneezy-gray-elephant
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.32 22
+	port = 20475
+	user = nobody
+}

@@ -1,0 +1,11 @@
+service pi_grumpy-gold-eagle
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.37 22
+	port = 20133
+	user = nobody
+}

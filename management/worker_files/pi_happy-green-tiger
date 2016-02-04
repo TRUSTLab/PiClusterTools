@@ -1,0 +1,11 @@
+service pi_happy-green-tiger
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.39 22
+	port = 20021
+	user = nobody
+}

@@ -1,0 +1,11 @@
+####################################
+# CS 2011 Group Login Instructions #
+####################################
+
+Your group has been assigned the machine smart-silver-whale
+
+To access smart-silver-whale you must execute the following command:
+	ssh -p 20649 urania.eecs.uc.edu -l USERNAME
+
+Please include both the machine name, and port number 20649
+in any e-mails for support requests.

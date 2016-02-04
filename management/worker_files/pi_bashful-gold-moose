@@ -1,0 +1,11 @@
+service pi_bashful-gold-moose
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.24 22
+	port = 20336
+	user = nobody
+}

@@ -1,0 +1,11 @@
+service pi_caffeinated-green-eagle
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.25 22
+	port = 20923
+	user = nobody
+}

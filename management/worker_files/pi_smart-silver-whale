@@ -1,0 +1,11 @@
+service pi_smart-silver-whale
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.26 22
+	port = 20649
+	user = nobody
+}

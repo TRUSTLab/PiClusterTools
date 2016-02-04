@@ -1,0 +1,11 @@
+####################################
+# CS 2011 Group Login Instructions #
+####################################
+
+Your group has been assigned the machine bashful-gold-moose
+
+To access bashful-gold-moose you must execute the following command:
+	ssh -p 20336 urania.eecs.uc.edu -l USERNAME
+
+Please include both the machine name, and port number 20336
+in any e-mails for support requests.

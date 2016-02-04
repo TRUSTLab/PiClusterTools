@@ -5,36 +5,21 @@ import subprocess
 import sys
 from random import randint
 import xkcdPasswd
+import PiClusterTools as pct
 
 
 password = xkcdPasswd.genPasswd(4)
 
 username = sys.argv[1]
 
-if (os.path.isfile("pi-users.txt")):
-    fin = open("pi-users.txt", 'r')
-else:
-    subprocess.check_output("cp pi-roster.txt pi-users.txt", shell=True)
-    fin = open("pi-users.txt", 'r')
+pct.initUserTable()
 
-tenantList = {}
-tenantCount = {}
-ipaddress = {}
-macaddress = {}
-port = {}
+entry = pct.findMinMachine()
+name = str(entry["Name"])
+mac = str(entry["MacAddr"])
+users = int(entry["Users"])
+ip = str(entry["Ip"])
 
-for line in fin:
-    # Line format: cc:cc:cc:cc:cc:06 wistful_silver_fox 192.168.0.16 20844
-    tokens = line.split()
-    tenants = len(tokens) - 4
-    userlist = tokens[4:]
-    tenantList[tokens[1]] = userlist
-    tenantCount[tokens[1]] = tenants
-    ipaddress[tokens[1]] = tokens[2]
-    macaddress[tokens[1]] = tokens[0]
-    port[tokens[1]] = tokens[3]
-    
-machine = min(tenantCount, key=tenantCount.get)
 tenantList[machine].append(username)
 tenantCount[machine] = tenantCount[tokens[1]] + 1
 
