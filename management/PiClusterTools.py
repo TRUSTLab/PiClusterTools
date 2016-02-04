@@ -35,8 +35,10 @@ def registerUserOnMin(username):
     users = int(entry["Users"])
     ip = str(entry["Ip"])
 
-    createAccount(username, name, ip, "testpass")
-    registerUser(name, mac, users, username)
+    print entry + " " + name + " " + mac + " " + users + " " + ip
+
+    #createAccount(username, name, ip, "testpass")
+    #registerUser(name, mac, users, username)
 
 def registerUser(name, macaddr, users, username):
 
