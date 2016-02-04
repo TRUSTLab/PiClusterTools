@@ -41,7 +41,7 @@ def registerUserOnMin(username):
 
 def registerUser(name, macaddr, users, username):
 
-    db = lite.connect('pi-users.db')
+    db = lite.connect('ip-users.db')
 
     users = users + 1
     
