@@ -48,10 +48,31 @@ def registerUserOnMin(username):
     mac = str(entry["MacAddr"])
     users = int(entry["Users"])
     ip = str(entry["Ip"])
+
+    passwd = xkcdPasswd.genPasswd(4)
     
-    createAccount(username, name, ip, "testpass")
+    createAccount(username, name, ip, passwd)
     registerUser(name, mac, users, username)
 
+    genUserInstructions(username, name, passwd)
+
+def deleteUser(username):
+    server = deregisterUser(username)
+
+    db = lite.connect('pi-users.db')
+
+    with db:
+        cur = db.cursor()
+        cur.execute('SELECT Ip FROM pis WHERE Name=?', (server,))
+        db.commit()
+
+        ip = cur.fetchall()[0][0]
+
+    deleteAccount(username, ip)
+
+    cmd = "rm user_files/instructions_" + username + ".txt"    
+    subprocess.check_output(cmd, shell=True)
+    
 def registerUser(name, macaddr, users, username):
 
     db = lite.connect('pi-users.db')
@@ -62,7 +83,6 @@ def registerUser(name, macaddr, users, username):
         cur = db.cursor()
         cur.execute('UPDATE pis SET Users=? WHERE Name=?', (users, name))
         cur.execute('INSERT INTO users VALUES(?, ?, ?)', (username, macaddr, name))
-
 
 def deregisterUser(username):
 
@@ -78,10 +98,17 @@ def deregisterUser(username):
 
         cur.execute('SELECT * FROM pis WHERE Name=?', (server,))
         db.commit()
-        piInfo = cur.fetchall()[0]
+        piInfo = cur.fetchall()
+        users = int(piInfo[0]["Users"]) - 1
+        
+        cur.execute('UPDATE pis SET Users=? WHERE Name=?', (users, server))
+        db.commit()
 
-    return(piInfo)
+        cur.execute('DELETE FROM users WHERE UserName=?', (username,))
+        db.commit()
 
+    return(server)
+        
 def createAccount(username, machine, ipaddress, password):
     print "Creating new account on " + machine + " " + ipaddress
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo mkdir /home/" + username
@@ -97,7 +124,7 @@ def createAccount(username, machine, ipaddress, password):
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo cp bash_profile ~" + username + "/.bash_profile"
     subprocess.check_output(cmd, shell=True)
 
-def deleteAccount(username, machine, ipaddress, password):
+def deleteAccount(username, ipaddress):
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo userdel " + username
     subprocess.check_output(cmd, shell=True)
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo rm -rf /home/" + username
@@ -112,8 +139,26 @@ def findMinMachine():
         cur.execute("SELECT * FROM pis")
         rows = cur.fetchall()
 
-    return min(rows, key = lambda t: t[2])
-        
+    return min(rows, key = lambda t: t[3])
+
+def genUserInstructions(username, machine, password):
+
+    fout = open("user_files/instructions_" + username + ".txt", "w")
+    finst = open("worker_files/instructions_" + machine + ".txt", "r")
+
+    for line in finst:
+        fout.write(line)
+    finst.close()
+
+    fout.write("\nYour username is:\t\t" + username + "\n")
+    fout.write("Your temporary password is:\t" + password + "\n")
+    fout.write("\nYou must change this password when you first log in. Be sure to share the new\n")
+    fout.write("password with your fellow group mates, as it will be changed for everyone when the\n")
+    fout.write("first person logs in.\n")
+    fout.write("\nOnce you have changed your password, you will have to log back in with your new password.\n")
+
+    fout.close()
+
 def initUserTable():
 
     pis = {}
