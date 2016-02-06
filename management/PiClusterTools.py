@@ -113,6 +113,10 @@ def createAccount(username, machine, ipaddress, password):
     print "Creating new account on " + machine + " " + ipaddress
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo mkdir /home/" + username
     subprocess.check_output(cmd, shell=True)
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chown " + username + " /home/" + username
+    subprocess.check_output(cmd, shell=True)
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chgrp " + username + " /home/" + username
+    subprocess.check_output(cmd, shell=True)        
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo useradd -d /home/" + username + " " + username
     subprocess.check_output(cmd, shell=True)
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P \"echo -e \\\"" + username + ":" + password + "\\\" | sudo chpasswd\""

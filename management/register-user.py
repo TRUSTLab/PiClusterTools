@@ -12,5 +12,5 @@ username = sys.argv[1]
 
 pct.initUserTable()
 
-if (pct.isUserRegistered() == False):
+if (pct.isUserRegistered(username) == False):
     pct.registerUserOnMin(username)
