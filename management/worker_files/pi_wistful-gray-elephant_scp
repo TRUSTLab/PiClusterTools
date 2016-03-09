@@ -1,0 +1,11 @@
+service worker_files/pi_wistful-gray-elephant_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.18 22
+	port = 22875
+	user = nobody
+}

@@ -113,10 +113,6 @@ def createAccount(username, machine, ipaddress, password):
     print "Creating new account on " + machine + " " + ipaddress
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo mkdir /home/" + username
     subprocess.check_output(cmd, shell=True)
-    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chown " + username + " /home/" + username
-    subprocess.check_output(cmd, shell=True)
-    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chgrp " + username + " /home/" + username
-    subprocess.check_output(cmd, shell=True)        
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo useradd -d /home/" + username + " " + username
     subprocess.check_output(cmd, shell=True)
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P \"echo -e \\\"" + username + ":" + password + "\\\" | sudo chpasswd\""
@@ -127,6 +123,11 @@ def createAccount(username, machine, ipaddress, password):
     subprocess.check_output(cmd, shell=True)
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo cp bash_profile ~" + username + "/.bash_profile"
     subprocess.check_output(cmd, shell=True)
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chown " + username + " /home/" + username
+    subprocess.check_output(cmd, shell=True)
+    cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo chgrp " + username + " /home/" + username
+    subprocess.check_output(cmd, shell=True)        
+
 
 def deleteAccount(username, ipaddress):
     cmd = "parallel-ssh -H " + ipaddress + " -t 0 -p 100 -P sudo userdel " + username
@@ -227,9 +228,21 @@ def portFromMac(macAddr):
 
     return myport
 
+def scpFromMac(macAddr):
+    macAddr = int(macAddr.replace(':', ''), 16)
+    random.seed(macAddr)
+    color = random.randint(0,9)
+    animal = random.randint(0,9)
+    mood = random.randint(0,9)
+
+    myport = "22" + str(mood) + str(color) + str(animal)
+
+    return myport
+
 def buildServices(macAddr, myip, masterip):
     myname = nameFromMac(macAddr)
     myport = portFromMac(macAddr)
+    myscp = scpFromMac(macAddr)
     servicename = "pi_" + myname
 
     template = open('template.xinetd', 'r')
@@ -238,14 +251,23 @@ def buildServices(macAddr, myip, masterip):
 
     myxtemplate = list(xtemplate)
     filename = "worker_files/" + servicename
+    scpname = "worker_files/" + servicename + "_scp"
     fout = open(filename, "w")
+    scpout = open(scpname, "w")
     for xline in myxtemplate:
+        scpline = xline
         xline = re.sub(r"\$MASTER\$", masterip, xline)
         xline = re.sub(r"\$IP\$", myip, xline)
         xline = re.sub(r"\$PORT\$", myport, xline)
         xline = re.sub(r"\$NAME\$", servicename, xline)
+        scpline = re.sub(r"\$MASTER\$", masterip, scpline)
+        scpline = re.sub(r"\$IP\$", myip, scpline)
+        scpline = re.sub(r"\$PORT\$", myscp, scpline)
+        scpline = re.sub(r"\$NAME\$", scpname, scpline)
         fout.write(xline.rstrip() + "\n")
+        scpout.write(scpline.rstrip() + "\n")
     fout.close()
+    scpout.close()
     print "Setting up services for " + myname + " on " + myip + " port " + myport
 
     filename = "worker_files/hostname." + myname
@@ -263,7 +285,9 @@ def buildServices(macAddr, myip, masterip):
     fout.close()
 
     xfilename = "worker_files/" + servicename
+    scpfilename = scpname
     subprocess.check_output("sudo cp " + xfilename + " /etc/xinetd.d/", shell=True)
+    subprocess.check_output("sudo cp " + scpfilename + " /etc/xinetd.d/", shell=True)
     subprocess.check_output("parallel-scp -H " + myip + " worker_files/hostname." + myname + " ~/", shell=True)
     subprocess.check_output("parallel-scp -H " + myip + " worker_files/hosts." + myname + " ~/", shell=True)
     subprocess.check_output("parallel-ssh -i -H " + myip + " sudo cp hostname." + myname + " /etc/hostname", shell=True)

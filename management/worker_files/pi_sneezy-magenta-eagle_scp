@@ -1,0 +1,11 @@
+service worker_files/pi_sneezy-magenta-eagle_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.31 22
+	port = 22483
+	user = nobody
+}

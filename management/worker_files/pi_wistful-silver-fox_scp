@@ -1,0 +1,11 @@
+service worker_files/pi_wistful-silver-fox_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.16 22
+	port = 22844
+	user = nobody
+}

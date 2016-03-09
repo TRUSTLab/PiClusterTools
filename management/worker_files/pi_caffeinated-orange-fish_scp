@@ -1,0 +1,11 @@
+service worker_files/pi_caffeinated-orange-fish_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.17 22
+	port = 22908
+	user = nobody
+}

@@ -1,0 +1,11 @@
+service worker_files/pi_sneezy-gold-tiger_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.22 22
+	port = 22431
+	user = nobody
+}

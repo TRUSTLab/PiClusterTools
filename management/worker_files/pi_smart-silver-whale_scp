@@ -1,0 +1,11 @@
+service worker_files/pi_smart-silver-whale_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.26 22
+	port = 22649
+	user = nobody
+}

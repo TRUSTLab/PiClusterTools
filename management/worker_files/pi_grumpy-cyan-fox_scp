@@ -1,0 +1,11 @@
+service worker_files/pi_grumpy-cyan-fox_scp
+{
+	disable = no
+	type = UNLISTED
+	socket_type = stream
+	protocol = tcp
+	wait = no
+	redirect = 192.168.0.12 22
+	port = 22194
+	user = nobody
+}
